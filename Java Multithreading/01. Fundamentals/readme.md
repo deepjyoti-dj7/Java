@@ -3,11 +3,13 @@
 ## 🧵 Thread Basics
 
 **What is a Thread?**
+
 - Smallest unit of execution within a process
 - Lightweight subprocess sharing same memory space
 - Has its own stack but shares heap memory
 
 **Why Use Threads?**
+
 - **Concurrency**: Execute multiple tasks simultaneously
 - **Responsiveness**: Keep UI responsive during background tasks
 - **Performance**: Better CPU utilization on multi-core systems
@@ -35,6 +37,7 @@
 6. **TERMINATED** - Execution completed
 
 **State Transitions:**
+
 ```
 NEW → start() → RUNNABLE
 RUNNABLE → synchronized block → BLOCKED → lock acquired → RUNNABLE
@@ -44,6 +47,7 @@ RUNNABLE → task completion → TERMINATED
 ```
 
 **Key Methods:**
+
 - `getState()` - Returns current thread state
 - `isAlive()` - Checks if thread is alive
 - `join()` - Wait for thread to complete
@@ -55,6 +59,7 @@ RUNNABLE → task completion → TERMINATED
 **4 Ways to Create Threads:**
 
 ### 1. Extending Thread Class
+
 ```java
 class MyThread extends Thread {
     public void run() { /* task */ }
@@ -62,10 +67,12 @@ class MyThread extends Thread {
 MyThread t = new MyThread();
 t.start();
 ```
+
 - ❌ Can't extend another class
 - ❌ Tight coupling with Thread
 
 ### 2. Implementing Runnable Interface ✅ **RECOMMENDED**
+
 ```java
 class MyTask implements Runnable {
     public void run() { /* task */ }
@@ -73,26 +80,31 @@ class MyTask implements Runnable {
 Thread t = new Thread(new MyTask());
 t.start();
 ```
+
 - ✅ Can extend other classes
 - ✅ Separation of concerns
 - ✅ Reusable task
 
 ### 3. Implementing Callable Interface
+
 ```java
 class MyCallable implements Callable<Integer> {
     public Integer call() { return result; }
 }
 Future<Integer> future = executor.submit(new MyCallable());
 ```
+
 - Returns a result
 - Can throw checked exceptions
 - Used with ExecutorService
 
 ### 4. Lambda Expressions
+
 ```java
 Thread t = new Thread(() -> { /* task */ });
 t.start();
 ```
+
 - Clean and concise
 - Functional programming style
 
@@ -102,15 +114,15 @@ t.start();
 
 **Key Differences:**
 
-| Aspect | Thread Class | Runnable Interface |
-|--------|-------------|-------------------|
-| Inheritance | Extends Thread | Implements Runnable |
+| Aspect               | Thread Class                | Runnable Interface          |
+| -------------------- | --------------------------- | --------------------------- |
+| Inheritance          | Extends Thread              | Implements Runnable         |
 | Multiple Inheritance | ❌ Can't extend other class | ✅ Can extend another class |
-| Reusability | ❌ Less reusable | ✅ Highly reusable |
-| Coupling | Tight coupling | Loose coupling |
-| Design | Represents a thread | Represents a task |
-| Object Creation | One object | Two objects (thread+task) |
-| Best Practice | ❌ Not recommended | ✅ **Recommended** |
+| Reusability          | ❌ Less reusable            | ✅ Highly reusable          |
+| Coupling             | Tight coupling              | Loose coupling              |
+| Design               | Represents a thread         | Represents a task           |
+| Object Creation      | One object                  | Two objects (thread+task)   |
+| Best Practice        | ❌ Not recommended          | ✅ **Recommended**          |
 
 **Why Runnable is Better:**
 
@@ -121,6 +133,7 @@ t.start();
 5. **Better OOP Design** - Follows Single Responsibility Principle
 
 **Example: Sharing Same Runnable**
+
 ```java
 Runnable task = () -> { /* logic */ };
 Thread t1 = new Thread(task);
@@ -134,6 +147,7 @@ executor.submit(task); // Thread pool
 ## 🎯 Important Methods
 
 **Thread Control:**
+
 - `start()` - Begins thread execution
 - `run()` - Contains code to be executed (don't call directly!)
 - `sleep(ms)` - Pauses current thread
@@ -142,6 +156,7 @@ executor.submit(task); // Thread pool
 - `isInterrupted()` - Checks interrupt status
 
 **Thread Information:**
+
 - `getName()` / `setName()` - Thread name
 - `getId()` - Unique thread ID
 - `getPriority()` / `setPriority()` - Thread priority (1-10, default 5)
@@ -149,6 +164,7 @@ executor.submit(task); // Thread pool
 - `isAlive()` - Check if thread is running
 
 **Thread Priority:**
+
 - `MIN_PRIORITY` = 1
 - `NORM_PRIORITY` = 5 (default)
 - `MAX_PRIORITY` = 10
